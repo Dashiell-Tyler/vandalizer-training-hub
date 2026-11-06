@@ -366,8 +366,8 @@ const COURSE = [
 ];
 // Which course modules go deeper on each hub lesson
 const COURSE_LINKS = {
-  "what-is-genai":[0], "tokens-context":[0,9], "hallucinations":[0,3,4], "prompting":[4],
-  "rag":[0,1], "responsible-use":[0], "uploading":[1], "extraction":[4], "extraction-walkthrough":[1,4], "workflow-walkthrough":[1,3,5], "chat-walkthrough":[0,1], "validate-walkthrough":[8,10], "projects-walkthrough":[10], "automations-walkthrough":[9], "library-walkthrough":[1,10], "uploading-walkthrough":[1], "teams-walkthrough":[10],
+  "what-is-genai":[0], "ai-fit":[0,2], "prompting":[0,4], "context-engineering":[0],
+  "governance":[10], "responsible-use":[0,10], "uploading":[1], "extraction":[4], "extraction-walkthrough":[1,4], "workflow-walkthrough":[1,3,5], "chat-walkthrough":[0,1], "validate-walkthrough":[8,10], "projects-walkthrough":[10], "automations-walkthrough":[9], "library-walkthrough":[1,10], "uploading-walkthrough":[1], "teams-walkthrough":[10],
   "workflows":[1,3,5,6,7,9], "chat":[0], "library":[1,10], "validate":[8], "teams":[10], "cost":[9]
 };
 
@@ -1616,156 +1616,262 @@ ${gstep(6,"Owner and admin tasks",`
   }]
 },
 /* ============================ MODULE 2 ============================ */
+/* Adapted from AI4RA's "AI Literacy for Research Administrators" course drafts (Modules 1-4). */
 {
   id:"ai-literacy", num:"Module 2", title:"AI Literacy Foundations",
   audience:"Anyone new to AI",
-  summary:"A short primer on the core ideas you need before using any AI tool at work: what large language models are, where they fail, and how to use them responsibly. Module 0 of the VWA certification course goes further.",
+  summary:"The core AI skills for research administrators: what AI is, when to use it, how to reason about ethics, how to prompt well, and how to stay compliant. Adapted from AI4RA's AI Literacy for Research Administrators course.",
   lessons:[
   {
-    id:"what-is-genai", title:"What generative AI is (and isn't)", mins:10,
-    objectives:["Explain in plain language what a large language model (LLM) does","Tell the difference between generating text and looking up facts","Name tasks where LLMs help and tasks where they don't"],
+    id:"what-is-genai", title:"What AI is (and isn't)", mins:10,
+    objectives:["Define AI in plain language","Spot common myths about AI","Judge when a chatbot is safe and reliable to use"],
     body:`
-<h2>A prediction engine for text</h2>
-<p>A large language model (LLM) is a program trained on a very large amount of text. Given some input, it predicts what text is most likely to come next, one small piece at a time. That simple mechanism is powerful enough to summarize, rewrite, classify, and answer questions.</p>
-<p>The important part: an LLM produces <em>plausible</em> text. It does not check a database of facts unless a system around it gives it real documents to read. That's why tools like Vandalizer feed the model your actual documents instead of relying on what the model "remembers."</p>
-<h2>Where LLMs are useful in research administration</h2>
+<h2>A working definition</h2>
+<p>US law (<a href="https://uscode.house.gov/view.xhtml?req=(title:15%20section:9401%20edition:prelim)" target="_blank" rel="noopener">15 U.S.C. § 9401</a>) defines AI as a machine-based system that, for human-defined objectives, makes predictions, recommendations or decisions. Put simply: <strong>an AI tool works out its own answer from patterns in data, instead of following rules written in advance.</strong></p>
+<div class="callout"><strong>Why that matters in research administration</strong>You can approve a tool, its permitted uses and its guardrails, but never its specific output. So assurance has to come from the process around the tool: checking outputs, keeping a record, and testing on cases where you know the answer.</div>
+<h2>AI is an umbrella term</h2>
 <table>
-<tr><th>Good fit</th><th>Poor fit without extra safeguards</th></tr>
-<tr><td>Pulling deadlines, page limits, and budget caps out of a long solicitation</td><td>Making a final compliance determination</td></tr>
-<tr><td>Summarizing a 40-page award agreement</td><td>Quoting a regulation from memory</td></tr>
-<tr><td>Comparing two versions of a subaward</td><td>Calculating final indirect cost figures</td></tr>
-<tr><td>Drafting a first-pass checklist</td><td>Anything that won't be reviewed by a person</td></tr>
+<tr><th>Technique</th><th>What it does</th><th>Example</th></tr>
+<tr><td>Machine learning</td><td>Learns from data to predict or decide</td><td>Fraud detection</td></tr>
+<tr><td>Deep learning</td><td>Machine learning with layered neural networks</td><td>Speech recognition</td></tr>
+<tr><td>Natural language processing</td><td>Understands and generates language</td><td>Chatbots, summaries</td></tr>
+<tr><td>Image recognition</td><td>Finds patterns in images</td><td>Reading scanned forms</td></tr>
+<tr><td>Reinforcement learning</td><td>Learns by trial and reward</td><td>Game-playing AI</td></tr>
 </table>
-<div class="callout"><strong>Mental model</strong>Treat the AI as a fast, well-read assistant on their first day: helpful for drafts and first passes, but you sign off on the work.</div>
-<h2>Key terms</h2>
+<p>Chatbots such as ChatGPT, Claude and Gemini run on <strong>large language models (LLMs)</strong>, which predict likely text. They produce <em>plausible</em> answers, not checked facts, so they can state false things confidently. These are called <strong>hallucinations</strong>.</p>
+<h2>AI is not…</h2>
 <ul>
-<li><strong>Model:</strong> the trained AI system (for example, a Claude, GPT, Gemini, or open-weight model).</li>
-<li><strong>Prompt:</strong> the instructions and content you give the model.</li>
-<li><strong>Output / response:</strong> what the model generates.</li>
-<li><strong>Provider:</strong> the company or server that runs the model. Vandalizer can connect to many providers, including self-hosted ones.</li>
-</ul>`,
-    takeaways:["LLMs generate likely text; they are not fact databases.","They are strongest at reading, summarizing, and extracting from documents you provide.","A person stays responsible for decisions."],
-    quiz:{q:"Why does Vandalizer give the model your actual documents instead of just asking it questions?",
-      opts:["Models are too slow without documents","Grounding the model in real documents makes answers checkable and reduces made-up facts","Documents are required to log in","It's a licensing requirement"],a:1,
-      why:"LLMs produce plausible text. Giving them the source document, and showing citations back to it, lets you check the answer."},
-    sources:[SRC.nist]
-  },
-  {
-    id:"tokens-context", title:"Tokens, context windows, and cost", mins:8,
-    objectives:["Define a token and a context window","Explain why long documents cost more to process","Connect token usage to deployment cost"],
-    body:`
-<h2>Tokens</h2>
-<p>Models read and write text in chunks called <strong>tokens</strong>. A token is often a word or part of a word; a rough rule of thumb for English is about ¾ of a word per token. Providers bill by the number of tokens going in (<em>input</em>) and coming out (<em>output</em>).</p>
-<h2>The context window</h2>
-<p>The <strong>context window</strong> is how much text a model can consider at once: your instructions, the document, the conversation so far, and its own answer. Very long documents may need to be split into pieces (called <em>chunks</em>) and only the relevant chunks sent to the model.</p>
-<h2>Why this matters for Vandalizer</h2>
-<p>The Vandalizer docs note that in a typical deployment, <strong>input tokens dominate cost</strong>: document context, not generated text, is where the money goes. That's why choices like extraction strategy, prompt caching, and model selection matter more than shortening answers.</p>
-<div class="callout"><strong>Example from the Vandalizer cost estimator</strong>One structured extraction over a ~30-page document using the default two-pass strategy is modeled at about 30,000 input tokens. Switching that step to one-pass roughly halves its input cost.</div>`,
-    takeaways:["Tokens are the unit of both model input and billing.","Long documents are chunked so only relevant parts reach the model.","In Vandalizer, input (document) tokens drive most of the cost."],
-    quiz:{q:"According to the Vandalizer docs, what usually drives most of the LLM cost?",
-      opts:["Output tokens from long answers","Input tokens from document context","Number of users logged in","File storage"],a:1,
-      why:"The docs state that input tokens dominate: document context, not generated text, is where the money goes."},
-    sources:[SRC.docs]
-  },
-  {
-    id:"hallucinations", title:"Hallucinations and verifying AI output", mins:10,
-    objectives:["Recognize what a hallucination is","Use citations to check answers","Build a habit of verification before acting"],
-    body:`
-<h2>What a hallucination is</h2>
-<p>A <strong>hallucination</strong> is output that sounds confident but is wrong or unsupported: a deadline that isn't in the solicitation, a regulation section that doesn't exist, or a dollar figure pulled from the wrong table.</p>
-<h2>How Vandalizer helps you check</h2>
-<ul>
-<li><strong>Citation-backed chat:</strong> answers point back to the source document and page.</li>
-<li><strong>Source tracking on extractions:</strong> each extracted field tracks where it came from, so you can jump to the supporting passage, or see that no source was found.</li>
-<li><strong>Validate &amp; Improve:</strong> extractions and workflows can be scored against a test set before you trust them at scale.</li>
+<li><strong>Magic or conscious.</strong> It runs on data, algorithms and computing power. It doesn't think or feel.</li>
+<li><strong>Perfect.</strong> It hallucinates and can reflect bias in its training data.</li>
+<li><strong>One thing.</strong> It's a family of techniques.</li>
+<li><strong>New.</strong> The term dates from 1956, and your institution already uses AI in spam filters, plagiarism detection and library search. The real question is which uses need scrutiny.</li>
 </ul>
-<h2>A simple verification routine</h2>
+<h2>The "crowd of amateurs"</h2>
+<p>Picture asking a chatbot as asking a crowd of a thousand well-read volunteers. Two checks follow:</p>
 <ol class="steps">
-<li><strong>Open the citation.</strong> Does the passage actually say what the answer claims?</li>
-<li><strong>Check "no source found" fields.</strong> A blank or unsourced value is a signal to look manually.</li>
-<li><strong>Spot-check numbers.</strong> Dates, dollar amounts, and percentages are the highest-risk fields.</li>
-<li><strong>Escalate when it matters.</strong> For compliance decisions, the AI output is input to your judgment, not a replacement for it.</li>
-</ol>
-<div class="callout warn"><strong>Watch for</strong>Answers that are specific but uncited, and confident answers to questions the document doesn't cover.</div>`,
-    takeaways:["Hallucinations are fluent but unsupported answers.","Always open the citation for anything you'll act on.","Unsourced extracted fields need a manual check."],
-    quiz:{q:"An extraction returns a submission deadline, but the field shows no supporting source. What should you do?",
-      opts:["Trust it; the model is usually right","Delete the document","Check the document manually before using the date","Re-run until a different date appears"],a:2,
-      why:"Vandalizer flags fields with no source found. That's your cue to verify by hand."},
-    sources:[SRC.gh, SRC.docs]
+<li><strong>Is it safe?</strong> Unless the tool is approved and secured by your institution, entering data is like handing it to strangers.</li>
+<li><strong>Is it reliable?</strong> A crowd is good at common knowledge, brainstorming and summarizing. It's poor at novel, contested or expert-only questions, so use a specialized tool, a person, or a non-AI method instead.</li>
+</ol>`,
+    takeaways:["AI infers answers from data patterns, so approve the process, not the output.","LLMs produce plausible text and can hallucinate.","AI isn't magic, conscious, perfect, one thing, or new.","Before using a chatbot, ask: is it safe, and is it reliable for this question?"],
+    quiz:{q:"Using the crowd-of-amateurs idea, what's the right move before pasting a budget with staff salaries into a free public chatbot?",
+      opts:["Go ahead; chatbots forget everything","Treat it as handing the data to strangers and use only an institution-approved tool","Remove the totals first","Ask the chatbot to keep it private"],a:1,
+      why:"Unless a tool is approved and secured by your institution, entering data is effectively sharing it outside your control."},
+    sources:[["15 U.S.C. § 9401 (definition of AI)", "https://uscode.house.gov/view.xhtml?req=(title:15%20section:9401%20edition:prelim)"], ["NCURA video: What is AI (and what it isn't)", "https://youtu.be/-Elht3Imckk"], SRC.nist]
+  },
+  {
+    id:"ai-fit", title:"Is this a job for AI?", mins:10,
+    objectives:["Recognize tasks that suit AI","Choose between AI and data science","Decide how much autonomy to give an AI tool"],
+    body:`
+<h2>Start with the task</h2>
+<p>Name exactly what you want done, starting with a verb. AI does well on work that is <strong>repetitive, structured and document-heavy</strong>:</p>
+<ul>
+<li>Extracting deadlines and eligibility rules from solicitations</li>
+<li>Comparing versions of an award or proposal</li>
+<li>Parsing award terms for reporting requirements</li>
+<li>Building submission and closeout checklists</li>
+</ul>
+<p>Then weigh <strong>impact</strong> (how much it affects outcomes, compliance or workload) against <strong>ease</strong> (how readily AI can be applied without major changes or risk).</p>
+<h2>AI or data science?</h2>
+<table>
+<tr><th></th><th>Data science</th><th>AI</th></tr>
+<tr><td>Strengths</td><td>Precise, reproducible, auditable</td><td>Flexible; handles messy text at scale</td></tr>
+<tr><td>Weaknesses</td><td>Needs clean, structured data</td><td>Can hallucinate; needs validation</td></tr>
+<tr><td>Best for</td><td>Financial analysis, structured reports</td><td>Reading and comparing documents, drafting</td></tr>
+</table>
+<div class="callout"><strong>Rule of thumb</strong>Need a precise, auditable answer from structured data? Use a query or spreadsheet first. Working with unstructured text across many documents? AI, with validation, may fit.</div>
+<h2>How much autonomy?</h2>
+<p>Ask: <strong>does it matter <em>how</em> the work was done, or only <em>what</em> the result is?</strong></p>
+<table>
+<tr><th>Tier</th><th>AI's role</th><th>Examples</th></tr>
+<tr><td><strong>Process-critical</strong></td><td>Not the decision-maker; use documented, reproducible methods</td><td>Financial audits, effort certification, misconduct reviews</td></tr>
+<tr><td><strong>Human-in-the-loop</strong></td><td>Drafts, flags and summarizes; a professional approves</td><td>Budget flag review, subrecipient risk summaries</td></tr>
+<tr><td><strong>Output-driven</strong></td><td>Well suited; still validate</td><td>Boilerplate, formatting, internal summaries</td></tr>
+</table>
+<p>A helpful mental model: AI is a <strong>fast but inexperienced junior analyst</strong>. Great for first passes; an experienced person reviews before anything is acted on.</p>
+<h2>Choosing a tool</h2>
+<ul>
+<li><strong>General assistants</strong> (ChatGPT, Claude, Gemini, Copilot): versatile drafting and summarizing; free tiers may train on your inputs.</li>
+<li><strong>Specialized research tools</strong> (for example Elicit, Semantic Scholar, Consensus): literature and evidence tasks.</li>
+<li><strong>RA-specific platforms</strong> such as <strong>Vandalizer</strong>: repeatable, reusable workflows on research administration documents.</li>
+</ul>
+<p>Before choosing, ask: Is the data sensitive? Is it a structured RA document? Do I need cited or current information? Will the output go into a proposal? Which tools has my institution approved?</p>`,
+    takeaways:["AI fits repetitive, structured, document-heavy tasks.","Use data science for precise, auditable answers from structured data.","If the process must be auditable, AI shouldn't be the decision-maker.","Match the tool to the task and your institution's approved list."],
+    quiz:{q:"A colleague wants an AI chatbot to certify effort reports because it's faster. Which tier is this task?",
+      opts:["Output-driven: fine to automate","Human-in-the-loop: AI decides, a person signs","Process-critical: AI shouldn't be the decision-maker","Not an AI question at all"],a:2,
+      why:"Effort certification must be transparent, auditable and attributable to an accountable person, so AI can't make the call."},
+    sources:[SRC.ai4ra, SRC.docs]
+  },
+  {
+    id:"ai-ethics", title:"Thinking through AI ethics", mins:10,
+    objectives:["Tell a factual claim from an ethical one","Use four guiding questions on any AI decision","Recognize when a problem is collective, not individual"],
+    body:`
+<p>AI ethics isn't a code of conduct. It's knowing <strong>which questions to ask</strong> about an AI tool and <strong>how to reason</strong> when reasonable people disagree. The risk with AI is a decision that <em>sounds</em> defensible, often with a fluent AI-written rationale, but isn't.</p>
+<h2>"Is" versus "ought"</h2>
+<ul>
+<li><strong>Descriptive:</strong> what <em>is</em> true. "Most of our office uses AI to draft emails." Check it by looking.</li>
+<li><strong>Normative:</strong> what we <em>ought</em> to do. "We should disclose AI use in emails." Check it by reasoning.</li>
+</ul>
+<p>"Everyone does it, so it's fine" slides from <em>is</em> to <em>ought</em>, and doesn't hold. And "ought implies can": a rule that's impossible to follow, like verifying every AI output line by line at full volume, isn't a workable rule.</p>
+<h2>Four guiding questions</h2>
+<table>
+<tr><th>Question</th><th>Ask about</th></tr>
+<tr><td><strong>Who is made vulnerable?</strong></td><td>People downstream (PIs, sponsors, the public) and upstream (vendors, IT, whose data trained the model)</td></tr>
+<tr><td><strong>How can harm be minimized?</strong></td><td>Could outputs disadvantage particular PIs, fields or subrecipients? What guardrails help?</td></tr>
+<tr><td><strong>Who benefits, and how widely?</strong></td><td>Are benefits real and measured? Who's left out?</td></tr>
+<tr><td><strong>Can it be reversed?</strong></td><td>How would you spot problems and change course? Prefer reversible options.</td></tr>
+</table>
+<h2>Two ways to reason</h2>
+<ul>
+<li><strong>Argument by analogy:</strong> "AI drafting is like using a copyeditor, and we don't disclose copyeditors." Test it by looking for a <em>relevant</em> difference, such as judgment, accuracy or accountability.</li>
+<li><strong>Reflective equilibrium:</strong> go back and forth between gut reactions and principles until they fit. <em>Notice → Articulate → Test → Refine → Hold provisionally</em>, and repeat as new cases arise.</li>
+</ul>
+<h2>Watch for weak reasoning</h2>
+<p>"It just feels wrong" (not yet articulated) · "Always disclose AI use" (too broad: spell-check?) · "Adopt or fall behind" (false choice) · "That's IT's problem" (passing the buck) · "We already adopted it" (past choice isn't justification).</p>
+<h2>When the problem is the structure</h2>
+<ul>
+<li><strong>Tragedy of the commons:</strong> every office running more AI adds up to real energy and water use. Needs shared limits.</li>
+<li><strong>Prisoner's dilemma:</strong> institutions gain an edge by quietly skipping guardrails, and everyone loses trust. Needs binding agreements and transparency.</li>
+<li><strong>Stag hunt:</strong> shared disclosure norms only work if everyone commits. Needs visible commitment and trust.</li>
+</ul>
+<p>To ground the energy conversation in data, see <a href="https://what-uses-more.com" target="_blank" rel="noopener">what-uses-more.com</a> and the University of Idaho's <a href="https://ai.uidaho.edu/gpu_telemetry_analysis.html" target="_blank" rel="noopener">GPU cluster footprint analysis</a>.</p>`,
+    takeaways:["Separate what is done from what ought to be done.","Ask: who's vulnerable, how to minimize harm, who benefits, can it be reversed?","Test analogies for relevant differences; refine principles against cases.","Some AI problems need shared rules, not just individual good choices."],
+    quiz:{q:"\"Everyone in our office uses AI without disclosing it, so it must be fine.\" What's wrong with this argument?",
+      opts:["Nothing; common practice sets the standard","It slides from what is done to what ought to be done","It's a reversibility problem","It's a tragedy of the commons"],a:1,
+      why:"Widespread practice is a descriptive fact; it doesn't by itself justify a normative claim about what's permissible."},
+    sources:[["What uses more? (energy and water comparisons)", "https://what-uses-more.com"], ["University of Idaho GPU telemetry analysis", "https://ai.uidaho.edu/gpu_telemetry_analysis.html"], SRC.nist]
   },
   {
     id:"prompting", title:"Writing effective prompts", mins:12,
-    objectives:["Structure a clear prompt","Write precise extraction field descriptions","Iterate on a prompt using results"],
+    objectives:["Build a prompt from its seven parts","Spot a poor prompt","Build verification into your prompts"],
     body:`
-<h2>The parts of a good prompt</h2>
+<h2>The seven parts of a strong prompt</h2>
 <table>
-<tr><th>Part</th><th>Example</th></tr>
-<tr><td><strong>Role / context</strong></td><td>"You are reviewing an NSF solicitation for a pre-award specialist."</td></tr>
-<tr><td><strong>Task</strong></td><td>"List every deadline in the document."</td></tr>
-<tr><td><strong>Constraints</strong></td><td>"Only use information in the document. If a value isn't stated, say 'Not stated'."</td></tr>
-<tr><td><strong>Format</strong></td><td>"Return a table with columns: deadline type, date, time zone, page."</td></tr>
+<tr><th>Part</th><th>What to include</th></tr>
+<tr><td><strong>Role</strong></td><td>"You are a pre-award research administrator at a public R1 university."</td></tr>
+<tr><td><strong>Context</strong></td><td>Sponsor, project, audience, deadline. If a new staff member would need it, so does the AI.</td></tr>
+<tr><td><strong>Instruction</strong></td><td>A specific task: "Flag potentially unallowable costs as RED, YELLOW or GREEN with citations."</td></tr>
+<tr><td><strong>Input data</strong></td><td>The RFP, budget or email, clearly separated from the instructions.</td></tr>
+<tr><td><strong>Output format</strong></td><td>Headings, table, length, required sections such as "Red flags".</td></tr>
+<tr><td><strong>Constraints</strong></td><td>What <em>not</em> to do: "Don't exceed one page. Say 'Not stated' if the FOA doesn't cover it."</td></tr>
+<tr><td><strong>Examples</strong></td><td>A past summary or checklist in the style you want (optional).</td></tr>
 </table>
-<h2>Prompting for extraction</h2>
-<p>When you define fields to extract, the field name and description <em>are</em> the prompt. Be specific:</p>
+<p>You won't need every part every time. A prompt like this takes 10–15 minutes to write the first time and about 90 seconds to reuse.</p>
+<h2>Is your prompt poor?</h2>
+<p>Probably, if any of these are true:</p>
 <ul>
-<li>Weak: <code>budget</code></li>
-<li>Strong: <code>max_total_budget</code>: "The maximum total award amount per proposal including indirect costs, in US dollars. If only a direct-cost cap is given, return null."</li>
+<li>It would mean the same thing at any other organization.</li>
+<li>It's shorter than a sentence, or has no sponsor, PI or policy names.</li>
+<li>Fixing the output takes longer than starting over.</li>
+<li>You can't easily check whether the output is accurate or compliant.</li>
 </ul>
-<h2>Iterate</h2>
-<p>Run your prompt on a few representative documents, look at where it fails, and tighten the wording. Vandalizer's <em>Validate &amp; Improve</em> feature can automate part of this by scoring results against a test set.</p>
-<div class="callout"><strong>Save what works</strong>Store prompts and extraction templates you've tuned in the Vandalizer Library so your team can reuse them.</div>`,
-    takeaways:["Give role, task, constraints, and output format.","Field descriptions in an extraction are prompts; make them precise.","Test on real documents, then refine and save to the Library."],
-    quiz:{q:"Which field description is most likely to produce a reliable extraction?",
-      opts:["\"budget\"","\"money\"","\"Maximum total award per proposal including indirect costs, in USD; null if not stated\"","\"Get the important numbers\""],a:2,
-      why:"Specific descriptions that define units, scope, and what to do when a value is missing give the model far less room to guess."},
-    sources:[SRC.docs]
+<h2>Iterate, then save</h2>
+<p><em>Draft → Test on a real document → Refine one part at a time → Save and name it → Refine again as edge cases appear.</em> A good prompt is a working document.</p>
+<h2>Build in verification</h2>
+<p>In research administration, fast and wrong is worse than slower and right. Ask for a citation after each claim, ask the model to show its math, and ask it to flag uncertainty. Then spot-check those parts. If you asked for citations and got none, push back.</p>
+<div class="callout"><strong>In Vandalizer</strong>An extraction's field names and descriptions <em>are</em> the prompt. "<code>budget</code>" invites guessing; "Maximum total award per proposal including indirect costs, in USD; null if not stated" doesn't. Try prompt practice with AI4RA's <a href="https://n8-layman.shinyapps.io/promptulus/" target="_blank" rel="noopener">Promptulus</a>.</div>`,
+    takeaways:["Role, context, instruction, input, format, constraints, examples.","A prompt with no specifics is a poor prompt.","Iterate on real documents and save what works.","Ask for citations and flags so the output is easy to check."],
+    quiz:{q:"Which part of a prompt tells the AI what NOT to do, such as \"don't exceed one page\"?",
+      opts:["Role","Context","Constraints","Examples"],a:2,
+      why:"Constraints rule out whole classes of unwanted output without having to anticipate every failure."},
+    sources:[["Promptulus (AI4RA prompt practice tool)", "https://n8-layman.shinyapps.io/promptulus/"], SRC.docs]
   },
   {
-    id:"rag", title:"How retrieval-augmented generation (RAG) works", mins:8,
-    objectives:["Describe the steps of RAG","Explain why RAG answers can be cited","Know what limits RAG accuracy"],
+    id:"context-engineering", title:"Context windows and context engineering", mins:8,
+    objectives:["Explain the context window","Manage instructions, documents and conversation","Know when to start a fresh chat"],
     body:`
-<h2>RAG in four steps</h2>
-<ol class="steps">
-<li><strong>Chunk:</strong> when you upload a document, its text is extracted and split into smaller passages.</li>
-<li><strong>Embed:</strong> each chunk is converted into a numeric "embedding" that captures its meaning and stored in a vector database (Vandalizer uses ChromaDB).</li>
-<li><strong>Retrieve:</strong> when you ask a question, the system finds the chunks most similar in meaning to your question.</li>
-<li><strong>Generate:</strong> the model writes an answer using only those retrieved chunks, and cites them.</li>
-</ol>
-<p>The technique was introduced in research by Lewis et al. (2020) and is now a standard way to ground model answers in specific documents.</p>
-<h2>What limits accuracy</h2>
+<h2>The context window is the AI's page limit</h2>
+<p>Everything the AI can use in a conversation must fit in its <strong>context window</strong>, like an NSF project description that must fit in 15 pages. If something isn't in the window, the AI doesn't know it and may guess. Text is measured in <strong>tokens</strong> (roughly ¾ of a word each), which is also how most providers bill.</p>
+<h2>Three things compete for the space</h2>
+<table>
+<tr><th>What fills the window</th><th>Skill that manages it</th><th>RA analogy</th></tr>
+<tr><td>Instructions</td><td>Prompt engineering</td><td>Writing to the RFP's requirements</td></tr>
+<tr><td>Documents and data</td><td>Context engineering</td><td>Assembling the right supporting documents</td></tr>
+<tr><td>The conversation</td><td>Conversation management</td><td>Keeping a long email thread with a grant officer on track</td></tr>
+</table>
+<h2>Four habits</h2>
 <ul>
-<li><strong>Retrieval misses:</strong> if the right chunk isn't retrieved, the model can't use it. Rephrasing your question with the document's own terms often helps.</li>
-<li><strong>Poor text extraction:</strong> scanned PDFs without good OCR produce poor chunks.</li>
-<li><strong>Questions that need the whole document:</strong> "summarize every change across 200 pages" may be better suited to an extraction or workflow than chat.</li>
+<li><strong>Set up your context once.</strong> Use custom instructions or a project with your institution type, rules and preferred style.</li>
+<li><strong>Upload selectively.</strong> The three sections on cost allowability, not the whole 200-page guidance.</li>
+<li><strong>Start fresh when quality slips.</strong> Long threads crowd out the original instructions. Begin a new chat with a short summary.</li>
+<li><strong>Leave out noise.</strong> Choosing what the AI <em>doesn't</em> see is part of the skill.</li>
+</ul>
+<h2>Build once, reuse everywhere</h2>
+<p>Once a combination of instructions, documents and format works, package it so others can reuse it. Vandalizer is built around this: its <strong>chat</strong> automatically finds the relevant passages of your documents and cites them, and its <strong>extractions and workflows</strong> save the setup so anyone in your office gets consistent results.</p>`,
+    takeaways:["If it's not in the context window, the AI doesn't know it.","Instructions, documents and conversation share one limited space.","Upload only what's relevant; restart long, drifting chats.","Save working setups as reusable workflows."],
+    quiz:{q:"A long chat has started ignoring your original instructions. What's the best fix?",
+      opts:["Keep repeating the instructions","Upload more documents","Start a new chat with a short summary and the key documents","Switch to a bigger font"],a:2,
+      why:"A long conversation crowds out the instructions and documents; a fresh, focused start usually restores quality."},
+    sources:[["Anthropic: Effective context engineering for AI agents", "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"], SRC.docs]
+  },
+  {
+    id:"governance", title:"Compliance and AI governance", mins:10,
+    objectives:["Apply the compliance pyramid to AI","Know where AI rules come from","Add AI checks to existing processes"],
+    body:`
+<h2>The compliance pyramid still applies</h2>
+<p>Follow the <strong>most restrictive</strong> rule that applies: institution, award terms, sponsor, state, federal. The difference with AI is that much guidance is still emerging, so you may need to set your own office or institutional principles.</p>
+<h2>Where the rules come from</h2>
+<table>
+<tr><th>Level</th><th>Examples</th></tr>
+<tr><td><strong>Federal</strong></td><td>No comprehensive US AI law yet. Abroad, the <a href="https://artificialintelligenceact.eu/" target="_blank" rel="noopener">EU AI Act</a> sets rules by risk level.</td></tr>
+<tr><td><strong>Sponsors</strong></td><td><a href="https://grants.nih.gov/grants/guide/notice-files/NOT-OD-25-132.html" target="_blank" rel="noopener">NIH</a> won't consider applications substantially developed by AI as original, and limits PIs to six applications a year. <a href="https://www.nsf.gov/news/notice-to-the-research-community-on-ai" target="_blank" rel="noopener">NSF</a> encourages proposers to disclose AI use in the Project Description.</td></tr>
+<tr><td><strong>States</strong></td><td>Utah has an <a href="https://ai.utah.gov/" target="_blank" rel="noopener">Office of AI Policy</a>; Idaho has a <a href="https://its.idaho.gov/ai/" target="_blank" rel="noopener">framework for responsible AI</a> in state government.</td></tr>
+<tr><td><strong>Institution</strong></td><td>Your AI policy and approved-tools list. Ideally a cross-campus group (IT, legal, sponsored programs, research compliance) oversees it.</td></tr>
+</table>
+<div class="callout warn"><strong>Most restrictive wins</strong>Even if your institution allows AI for any part of proposal writing, a sponsor's limits still apply.</div>
+<h2>Build AI into processes you already have</h2>
+<ul>
+<li><strong>Routing forms:</strong> Was AI used? How? Did it process confidential or controlled data? Were sponsor AI rules checked?</li>
+<li><strong>Data management plans:</strong> Will AI analyze or generate data? How is privacy protected? How are outputs validated?</li>
+<li><strong>Submission:</strong> an attestation of responsible AI use.</li>
+<li><strong>Award setup:</strong> Will AI be used on the project, or project data used to train models?</li>
+<li><strong>Training</strong> for faculty and staff.</li>
+</ul>
+<h2>Writing a policy: the 5W1H questions</h2>
+<p><strong>What</strong> to regulate (data, proposal writing, participant privacy) · <strong>Why</strong> (ethics, law, intellectual property) · <strong>Who</strong> regulates (department, institution) · <strong>When</strong> (before use, after, or across the lifecycle) · <strong>Where</strong> (department or institution-wide) · <strong>How</strong> (policy, procedure, built into processes). Often you only need to add AI language to existing data, human subjects and procurement policies.</p>
+<p class="small-note">Good governance reduces risk without creating fear or blocking useful AI.</p>`,
+    takeaways:["Follow the most restrictive rule, sponsor rules included.","NIH and NSF already have AI-related expectations for proposals.","Add AI questions to routing, DMPs, attestations and award setup.","Use 5W1H to write or update AI policy."],
+    quiz:{q:"Your institution allows AI for all proposal writing, but the sponsor restricts it. What applies?",
+      opts:["The institution's policy","The sponsor's restriction, because the most restrictive rule wins","Whichever the PI prefers","Neither; AI rules aren't enforceable"],a:1,
+      why:"As with any compliance question, follow the most restrictive applicable guideline."},
+    sources:[["NIH NOT-OD-25-132", "https://grants.nih.gov/grants/guide/notice-files/NOT-OD-25-132.html"], ["NSF notice to the research community on AI", "https://www.nsf.gov/news/notice-to-the-research-community-on-ai"], ["Liao et al. (2025), the 5W1H framework for AI governance", "https://doi.org/10.1016/j.jrt.2025.100127"], ["EU AI Act", "https://artificialintelligenceact.eu/"], ["Idaho ITS: AI", "https://its.idaho.gov/ai/"]]
+  },
+  {
+    id:"responsible-use", title:"Protecting data and staying accountable", mins:10,
+    objectives:["Classify data before using an AI tool","Know where research security rules apply","Document AI use so it can be audited"],
+    body:`
+<h2>Classify the data first</h2>
+<table>
+<tr><th>Type</th><th>What it covers</th></tr>
+<tr><td><strong>PII</strong></td><td>Anything that identifies a person, alone or combined (names, addresses, birth dates, ZIP codes)</td></tr>
+<tr><td><strong>PHI / HIPAA</strong></td><td>Identifiable health information</td></tr>
+<tr><td><strong>FERPA</strong></td><td>Student education records</td></tr>
+<tr><td><strong>Confidential or proprietary</strong></td><td>Budgets, internal memos, review comments, NDA-covered material</td></tr>
+<tr><td><strong>Export-controlled</strong></td><td>EAR (dual-use technology) and ITAR (defense) technical data</td></tr>
+<tr><td><strong>Federal contract information</strong></td><td>Covered by DoD's CMMC requirements, phased in from November 2025</td></tr>
+</table>
+<h2>Before you paste anything into an AI tool</h2>
+<ul>
+<li>Could it identify a person, even indirectly?</li>
+<li>Is it covered by an IRB protocol, consent terms, data use agreement or NDA?</li>
+<li>Do the sponsor terms, ITAR/EAR or contract clauses restrict it?</li>
+<li>Is the tool approved by your institution for this data type? Does it keep inputs for training?</li>
+<li>Could you do the task with de-identified or synthetic data instead?</li>
+</ul>
+<div class="callout warn"><strong>Research security</strong>Controlled data in an open AI tool, data processed on foreign servers, or AI outputs shared without export review can all create problems under export controls and NSPM-33.</div>
+<h2>Why self-hosting helps</h2>
+<p>Vandalizer runs on your institution's own servers, and administrators choose which models it uses, including self-hosted ones (see <a href="#/mindrouter">MindRouter Deployment</a>). Your institution's policies, not this training, decide what data you may upload.</p>
+<h2>Stay accountable</h2>
+<ul>
+<li><strong>Record AI use:</strong> note when and how AI helped, in routing fields, notes or document metadata.</li>
+<li><strong>Show your reasoning:</strong> mark where AI contributed and where human judgment decided.</li>
+<li><strong>Review every output:</strong> AI informs; it doesn't replace professional judgment.</li>
+<li><strong>Keep an audit trail:</strong> prompts used, versions and later edits, enough to reconstruct how a result was made.</li>
 </ul>`,
-    takeaways:["RAG = chunk, embed, retrieve, generate.","Citations come from the retrieved chunks.","Good OCR and specific questions improve results."],
-    quiz:{q:"In Vandalizer, where are document embeddings stored for RAG search?",
-      opts:["MongoDB","Redis","ChromaDB","The browser"],a:2,
-      why:"Per the docs, ChromaDB is the vector store for document embeddings."},
-    sources:[SRC.rag, SRC.docs]
-  },
-  {
-    id:"responsible-use", title:"Responsible and secure use", mins:10,
-    objectives:["Identify data that needs extra care","Explain why self-hosting matters for data control","Apply a human-in-the-loop approach"],
-    body:`
-<h2>Know your data</h2>
-<p>Research administration documents can include budgets, personnel information, proprietary research, export-controlled material, and agreements under confidentiality terms. Before uploading, ask: <em>Is this tool approved at my institution for this kind of data?</em></p>
-<h2>Why Vandalizer is self-hosted</h2>
-<p>Vandalizer is designed to run on your institution's own infrastructure, so you control your data, your models, and your infrastructure. Administrators choose which LLM providers it connects to, including self-hosted, OpenAI-compatible model servers (such as Ollama or vLLM), and air-gapped installs are supported.</p>
-<div class="callout warn"><strong>Ask your administrator</strong>Which model providers your deployment uses determines where document text is sent. Your institution's policies, not this training, govern which data you may upload.</div>
-<h2>Human in the loop</h2>
-<ul>
-<li>Use AI output as a first draft or first pass.</li>
-<li>Verify citations before acting.</li>
-<li>Keep a person accountable for compliance and financial decisions.</li>
-<li>Report errors so prompts and workflows can be improved.</li>
-</ul>
-<p>The NIST AI Risk Management Framework is a good free reference for thinking about AI risks in an organization.</p>`,
-    takeaways:["Follow institutional policy on what data you may upload.","Self-hosting keeps data under your institution's control.","People remain accountable for decisions."],
-    quiz:{q:"Who decides which LLM providers a Vandalizer deployment sends document text to?",
-      opts:["Each user, per chat","The deployment's administrators, in System Config","The NSF","It's fixed and can't be changed"],a:1,
-      why:"LLM models, API keys, and endpoints are configured per model by administrators in Admin → System Config."},
-    sources:[SRC.docs, SRC.gh, SRC.nist]
+    takeaways:["Classify data before it goes near an AI tool.","Use only institution-approved tools for sensitive data.","Export controls and research security still apply to AI.","Record AI use and keep an audit trail."],
+    quiz:{q:"What should an audit trail for AI-assisted work include?",
+      opts:["Nothing; AI output speaks for itself","The prompts used, versions and later human edits","Only the final document","The AI vendor's terms of service"],a:1,
+      why:"An audit trail needs enough detail to show how a result was produced and who made the final call."},
+    sources:[["University of Idaho FSH 5700: Research Data", "https://www.uidaho.edu/policies/fsh/5/5700"], ["AI4RA: CMMC Level 1 and AI", "https://ai4ra.uidaho.edu/cmmc-level1-req/"], SRC.nist, SRC.docs]
   }]
 },
 /* ============================ MODULE 3 ============================ */
@@ -2647,9 +2753,9 @@ function homeModules(){
     <h2 class="section">Suggested learning paths</h2>
     <p class="lede">Not sure where to start? Pick the path that matches your role.</p>
     <div class="grid3">
-      <div class="path"><h3>Research administrator</h3><ol><li>Feature Guides (Module 1), in order</li><li>Brush up as needed: Hallucinations · Prompting (Module 2)</li><li>Then: the full VWA certification course</li></ol></div>
+      <div class="path"><h3>Research administrator</h3><ol><li>Feature Guides (Module 1), in order</li><li>Brush up as needed: Is this a job for AI? · Writing effective prompts (Module 2)</li><li>Then: the full VWA certification course</li></ol></div>
       <div class="path"><h3>New to AI</h3><ol><li>AI Literacy (Module 2)</li><li>Then the Feature Guides (Module 1)</li><li>Then: VWA course Modules 0–1</li></ol></div>
-      <div class="path"><h3>IT / system administrator</h3><ol><li>Enterprise Deployment (Module 3)</li><li>Responsible and secure use (Module 2)</li><li>Self-hosting models: MindRouter Deployment (Module 4)</li><li>Go-live checklists in Modules 3 and 4</li></ol></div>
+      <div class="path"><h3>IT / system administrator</h3><ol><li>Enterprise Deployment (Module 3)</li><li>Compliance and data protection lessons (Module 2)</li><li>Self-hosting models: MindRouter Deployment (Module 4)</li><li>Go-live checklists in Modules 3 and 4</li></ol></div>
     </div>
   </div></section>`;
 }
