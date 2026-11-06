@@ -120,8 +120,24 @@ h2.section{font-size:1.9rem;margin:0 0 .4rem;font-weight:800}
 .ai4ra-head h2.section{margin:0}
 @media (max-width:1100px){.uc-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:900px){.about-grid,.uc-grid{grid-template-columns:1fr}}
+/* About cards on the home page */
+.about-cards{padding-bottom:1rem}
+.about-cards .lede{margin-bottom:1rem}
+.xcard{border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:var(--radius);background:var(--white);margin-bottom:.75rem}
+.xcard summary{cursor:pointer;list-style:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem 1rem;padding:1rem 3rem 1rem 1.25rem;position:relative}
+.xcard summary::-webkit-details-marker{display:none}
+.xcard summary::after{content:"+";position:absolute;right:1.1rem;top:50%;transform:translateY(-50%);font-size:1.6rem;font-weight:700;line-height:1}
+.xcard[open] summary::after{content:"−"}
+.xcard summary:hover{background:var(--gold-tint)}
+.xcard summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.xc-title{font-size:1.15rem;font-weight:800}
+.xc-teaser{color:var(--ink-2);font-size:.95rem}
+.xc-body{padding:0 1.25rem 1.25rem;border-top:1px solid var(--line);padding-top:1rem}
+.xc-body .ticks{margin-bottom:.75rem}
 .lesson h2.guide-heading{margin-top:2.5rem;padding-top:1.5rem;border-top:6px solid var(--gold);font-size:1.6rem;scroll-margin-top:1rem}
 .jump-guide{margin:0 0 1.25rem}
+/* logo PNG has ~25% empty space on each side; negative margins trim it so the letters sit on the baseline */
+.h1-logo{height:1.6em;width:auto;vertical-align:baseline;margin:-0.38em 0 -0.44em -0.4em}
 .hero-trial{margin:1rem 0 0;font-weight:700}
 .hero-trial a{color:var(--gold);text-decoration-color:var(--gold)}
 .hero-trial a:hover{background:#333}
@@ -2606,8 +2622,7 @@ const main = document.getElementById("main");
 function renderNav(activeMod){
   document.getElementById("topnav").innerHTML =
     `<a href="#/" ${!activeMod?'aria-current="true"':''}>Home</a>` +
-    MODULES.map(m=>`<a href="#/${m.id}" ${activeMod===m.id?'aria-current="true"':''}>${m.title.replace("Vandalizer ","")}</a>`).join("") +
-    `<a href="#/about" ${activeMod==="about"?'aria-current="true"':''}>About</a>`;
+    MODULES.map(m=>`<a href="#/${m.id}" ${activeMod===m.id?'aria-current="true"':''}>${m.title.replace("Vandalizer ","")}</a>`).join("");
   const {t,c} = totals();
   document.getElementById("footProgress").textContent = `${c} of ${t} lessons complete.`;
 }
@@ -2618,16 +2633,15 @@ function home(){
   <section class="hero">
     <div class="wrap">
       <div>
-        <img class="vz-logo hero-logo" src="assets/vandalizer-logo-reverse.png" alt="Vandalizer">
         <div class="kicker">Training Hub · University of Idaho · AI4RA</div>
-        <h1>Learn to use <span>Vandalizer</span>.</h1>
+        <h1>Learn to use <img class="h1-logo" src="assets/vandalizer-logo-reverse.png" alt="Vandalizer"></h1>
         <p>Step-by-step guides to every Vandalizer feature: upload documents, pull out structured data, build workflows, chat with your files, and check results before you rely on them.</p>
         <div class="actions">
           <a class="btn" href="#/features">Start the Feature Guides</a>
           <a class="btn ghost" href="#/ai-literacy">New to AI? Start with the basics</a>
         </div>
         <p class="hero-trial">Follow along in the app: <a href="${TRIAL_URL}" target="_blank" rel="noopener">Open the Vandalizer trial ↗</a></p>
-        <p class="hero-sub">New here? Read <a href="#/about">what Vandalizer is and who it's for</a>. IT staff setting up Vandalizer: see the <a href="#/deployment">Enterprise Deployment</a> and <a href="#/mindrouter">MindRouter</a> guides.</p>
+        <p class="hero-sub">New here? Read <a href="#/about">what Vandalizer is and who it's for</a> below. IT staff setting up Vandalizer: see the <a href="#/deployment">Enterprise Deployment</a> and <a href="#/mindrouter">MindRouter</a> guides.</p>
       </div>
       <div class="progress-card" aria-label="Your progress">
         <h2>Your progress</h2>
@@ -2637,24 +2651,21 @@ function home(){
       </div>
     </div>
   </section>
+  ${aboutCards()}
   ${homeModules()}`;
   renderNav(null);
   document.title = "Vandalizer Training Hub | University of Idaho";
 }
 
-function aboutView(){
-  main.innerHTML = `
-  <div class="wrap">
-    <div class="crumbs"><a href="#/">Home</a> / About</div>
-    <img class="vz-logo page-logo" src="assets/vandalizer-logo.png" alt="Vandalizer">
-    <div class="kicker" style="color:var(--ink-2)">About</div>
-  </div>
-  <section class="wrap about" aria-labelledby="what">
-    <h2 class="section" id="what">What is Vandalizer?</h2>
-    <p class="lede">Vandalizer is an open-source, AI-powered document platform built for research administration. You upload proposals, awards and regulatory documents, and Vandalizer helps you pull out the information you need, ask questions about them, and turn routine document work into repeatable workflows. You review and verify every result.</p>
-    <div class="about-grid">
-      <div class="about-col">
-        <h3>What it does</h3>
+function aboutCards(){
+  return `
+  <section class="wrap about-cards" id="about" aria-labelledby="about-h">
+    <h2 class="section" id="about-h">About Vandalizer</h2>
+    <p class="lede">Open any card to learn more.</p>
+    <details class="xcard">
+      <summary><span class="xc-title">What is Vandalizer?</span><span class="xc-teaser">An open-source AI document platform for research administration.</span></summary>
+      <div class="xc-body">
+        <p>Vandalizer is an open-source, AI-powered document platform built for research administration. You upload proposals, awards and regulatory documents, and Vandalizer helps you pull out the information you need, ask questions about them, and turn routine document work into repeatable workflows. You review and verify every result.</p>
         <ul class="ticks">
           <li><strong>Structured extraction:</strong> pulls dates, budgets, requirements and more out of PDFs into clean fields, each linked to the page it came from.</li>
           <li><strong>Workflows:</strong> chain steps into a repeatable pipeline you can run on one document or hundreds.</li>
@@ -2664,8 +2675,10 @@ function aboutView(){
           <li><strong>Self-hosted:</strong> runs on your institution's own servers with the AI provider your institution chooses, so you control your data.</li>
         </ul>
       </div>
-      <div class="about-col">
-        <h3>Who it's built for</h3>
+    </details>
+    <details class="xcard">
+      <summary><span class="xc-title">Who it's built for</span><span class="xc-teaser">Research administrators, research offices and campus IT.</span></summary>
+      <div class="xc-body">
         <ul class="ticks">
           <li><strong>Research administrators:</strong> pre-award and post-award staff who spend much of their day reading documents and re-typing what they say into spreadsheets and systems.</li>
           <li><strong>Research offices, especially at smaller institutions:</strong> AI4RA's mission focuses on institutions with outdated systems and limited resources, including emerging research institutions, minority-serving institutions and primarily undergraduate institutions.</li>
@@ -2673,48 +2686,41 @@ function aboutView(){
         </ul>
         <p class="about-note">No coding or technical background is needed to use Vandalizer.</p>
       </div>
-    </div>
-    <h3 class="uc-title">Suggested use cases</h3>
-    <div class="uc-grid">
-      <div class="uc"><h4>Proposal intake</h4><p>Pull the PI, sponsor, budget, project period and deadlines from each new proposal into one table, then check completeness.</p></div>
-      <div class="uc"><h4>Solicitation review</h4><p>Extract deadlines, page limits, budget caps and eligibility rules from a funding opportunity. Starter templates for NSF, NIH, DOD and DOE are included.</p></div>
-      <div class="uc"><h4>Compliance pre-screening</h4><p>Check a proposal for required elements, such as a data management plan or human subjects approval, and flag what's missing for your review.</p></div>
-      <div class="uc"><h4>Subaward review</h4><p>Extract parties, amounts, period and obligations from a subaward agreement and compare them against your standard terms.</p></div>
-      <div class="uc"><h4>Progress report processing</h4><p>Pull accomplishments, publications and expenditures from annual reports and flag missing sections before the sponsor deadline.</p></div>
-      <div class="uc"><h4>Budget review</h4><p>Extract line items from a budget justification and check that they add up to the stated total.</p></div>
-      <div class="uc"><h4>Award closeout</h4><p>Gather final expenditures, publications and deliverables from several documents into one summary.</p></div>
-      <div class="uc"><h4>Quick questions</h4><p>Ask chat what a clause means or whether a limit applies, and open the cited page to confirm.</p></div>
-    </div>
-    <div class="callout warn" style="margin-top:1.5rem"><strong>The pattern in every case</strong>Vandalizer does the first pass of reading and extracting; you do the second pass of verifying and making the judgment calls. Compliance and financial decisions stay with people.</div>
-  </section>
-  <section class="wrap about ai4ra-about" aria-labelledby="ai4ra">
-    <div class="ai4ra-head">
-      <a class="ai4ra-link" href="${AI4RA}" target="_blank" rel="noopener"><img src="assets/ai4ra-logo-transparent.png" alt="AI4RA: Artificial Intelligence for Research Administration" height="72"></a>
-      <div>
-        <div class="kicker" style="color:var(--ink-2)">AI4RA</div>
-        <h2 class="section" id="ai4ra">Who created Vandalizer</h2>
+    </details>
+    <details class="xcard">
+      <summary><span class="xc-title">Suggested use cases</span><span class="xc-teaser">Proposal intake, solicitation review, compliance checks and more.</span></summary>
+      <div class="xc-body">
+        <div class="uc-grid">
+          <div class="uc"><h4>Proposal intake</h4><p>Pull the PI, sponsor, budget, project period and deadlines from each new proposal into one table, then check completeness.</p></div>
+          <div class="uc"><h4>Solicitation review</h4><p>Extract deadlines, page limits, budget caps and eligibility rules from a funding opportunity. Starter templates for NSF, NIH, DOD and DOE are included.</p></div>
+          <div class="uc"><h4>Compliance pre-screening</h4><p>Check a proposal for required elements, such as a data management plan or human subjects approval, and flag what's missing for your review.</p></div>
+          <div class="uc"><h4>Subaward review</h4><p>Extract parties, amounts, period and obligations from a subaward agreement and compare them against your standard terms.</p></div>
+          <div class="uc"><h4>Progress report processing</h4><p>Pull accomplishments, publications and expenditures from annual reports and flag missing sections before the sponsor deadline.</p></div>
+          <div class="uc"><h4>Budget review</h4><p>Extract line items from a budget justification and check that they add up to the stated total.</p></div>
+          <div class="uc"><h4>Award closeout</h4><p>Gather final expenditures, publications and deliverables from several documents into one summary.</p></div>
+          <div class="uc"><h4>Quick questions</h4><p>Ask chat what a clause means or whether a limit applies, and open the cited page to confirm.</p></div>
+        </div>
+        <div class="callout warn" style="margin-top:1.25rem"><strong>The pattern in every case</strong>Vandalizer does the first pass of reading and extracting; you do the second pass of verifying and making the judgment calls. Compliance and financial decisions stay with people.</div>
       </div>
-    </div>
-    <p class="lede"><strong>AI4RA (Artificial Intelligence for Research Administration)</strong> created Vandalizer. The project is led by the University of Idaho in partnership with Southern Utah University and funded by the National Science Foundation (Award No. 2427549). AI4RA builds open-source AI and data science tools that make research administration more efficient and accessible, with a focus on smaller institutions that have limited resources.</p>
-    <div class="about-grid">
-      <div class="about-col">
-        <h3>What AI4RA works on</h3>
+    </details>
+    <details class="xcard">
+      <summary><span class="xc-title">Who created Vandalizer: AI4RA</span><span class="xc-teaser">An NSF-funded project led by the University of Idaho.</span></summary>
+      <div class="xc-body">
+        <div class="ai4ra-head">
+          <a class="ai4ra-link" href="${AI4RA}" target="_blank" rel="noopener"><img src="assets/ai4ra-logo-transparent.png" alt="AI4RA: Artificial Intelligence for Research Administration" height="64"></a>
+        </div>
+        <p><strong>AI4RA (Artificial Intelligence for Research Administration)</strong> created Vandalizer. The project is led by the University of Idaho in partnership with Southern Utah University and funded by the National Science Foundation (Award No. 2427549). AI4RA builds open-source AI and data science tools that make research administration more efficient and accessible, with a focus on smaller institutions that have limited resources.</p>
         <ul class="ticks">
           <li><strong>Open data models and workflows</strong> for research administration that follow FAIR principles (findable, accessible, interoperable, reusable).</li>
           <li><strong>AI tools</strong> such as Vandalizer for data extraction, compliance checks and decision support, tested for accuracy, reliability and reproducibility.</li>
           <li><strong>Campus rollouts</strong>, starting at the University of Idaho and Southern Utah University.</li>
         </ul>
-      </div>
-      <div class="about-col">
-        <h3>Connect with AI4RA</h3>
         <p>The AI4RA site has a community forum, a blog, a weekly tip and other resources for research administrators.</p>
         <a class="btn" href="${AI4RA}" target="_blank" rel="noopener">Visit the AI4RA site</a>
       </div>
-    </div>
+    </details>
     <p class="about-sources">Sources: <a href="${DOCS}" target="_blank" rel="noopener">Vandalizer documentation</a> · <a href="${GH}" target="_blank" rel="noopener">Vandalizer README</a> · <a href="${AI4RA}" target="_blank" rel="noopener">AI4RA project site</a> · <a href="https://ai4ra.uidaho.edu/products" target="_blank" rel="noopener">AI4RA products</a> · <a href="${COURSE_SRC}" target="_blank" rel="noopener">VWA certification course</a></p>
   </section>`;
-  renderNav("about");
-  document.title = "About | Vandalizer Training Hub";
 }
 
 function homeModules(){
@@ -2889,7 +2895,9 @@ function route(){
   const m = MODULES.find(x=>x.id===mid);
   const l = m && m.lessons.find(x=>x.id===lid);
   const qb = document.getElementById("q"); qb.value = ""; document.getElementById("results").style.display = "none";
-  if(l) lessonView(m,l); else if(m) moduleView(m); else if(mid==="about") aboutView(); else home();
+  if(l) lessonView(m,l); else if(m) moduleView(m); else home();
+  // #/about (old About tab) shows the About cards on the home page
+  if(mid==="about"){ document.getElementById("about")?.scrollIntoView(); return; }
   window.scrollTo(0,0);
   main.focus({preventScroll:true});
 }
