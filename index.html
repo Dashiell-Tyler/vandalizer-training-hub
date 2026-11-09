@@ -547,7 +547,7 @@ ${gstep(8,"Work with several files",`
 </ol>
 <p>You can also drag a file onto a folder, or onto a folder name in the path above the list. Files can't be moved between your personal folders and team folders.</p>`,
 shot(U+"07-selected.jpg","One file ticked, with the 1 selected toolbar showing Download, Move, Delete and Cancel","The selection toolbar.",[[1,46,322],[2,452,261],[3,371,240]],[[60,312,82,333],[57,247,441,275],[345,251,397,271]]) +
-shot(U+"08-move.jpg","Move file dialog listing Top level and the available folders, with Cancel","Moving a file.",[[1,283,253],[2,514,312]],[[294,214,506,293],[465,302,501,322]]))}
+shot(U+"08-move.jpg","Move file dialog listing Top level and the available folders, with Cancel","Moving a file.",[[1,283,253],[2,514,325]],[[294,203,506,305],[465,315,501,335]]))}
 
 ${gstep(9,"Find files",`
 <ol>
@@ -619,7 +619,7 @@ ${gstep(2,"Start a new extraction",`
 <li>Click ${UI("+ New")}.</li>
 <li>Choose ${UI("New Extraction")}.</li>
 </ol>`,
-shot(G+"02-new-menu.jpg","Library tab with the New menu open showing New Workflow, New Extraction, New Prompt and New Formatter","The Library's New menu.",[[1,600,59],[2,751,96],[3,583,152]],[[640,47,735,72],[686,86,736,107],[598,141,733,164]]))}
+shot(G+"02-new-menu.jpg","Library tab with the New menu open showing New Workflow, New Extraction, New Prompt and New Formatter","The Library's New menu.",[[1,600,59],[2,762,96],[3,594,152]],[[640,47,735,72],[697,87,747,108],[608,142,745,165]]))}
 
 ${gstep(3,"Name it",`
 <ol>
@@ -627,7 +627,7 @@ ${gstep(3,"Name it",`
 <li>Click ${UI("Create Extraction")}.</li>
 </ol>
 <p>Already have an extraction saved as a file? ${UI("Upload JSON")} imports it instead.</p>`,
-shot(G+"03-name.jpg","Name the extraction dialog with a name typed in and the Create Extraction button","Naming the extraction.",[[1,750,161],[2,476,216]],[[491,148,714,174],[491,197,587,237]]))}
+shot(G+"03-name.jpg","Name the extraction dialog with a name typed in and the Create Extraction button","Naming the extraction.",[[1,761,161],[2,487,216]],[[502,148,725,174],[502,197,598,237]]))}
 
 ${gstep(4,"Get to know the editor",`
 <p>The extraction editor opens on the ${UI("Design")} tab. Two things to notice:</p>
@@ -817,7 +817,7 @@ ${gstep(7,"Reuse a saved extraction",`
 <li>Its fields load in automatically, marked "From saved set". Click ${UI("Update")} to save the task.</li>
 </ol>
 <p>Reusing a saved extraction means you design the fields once and use them in many workflows. To change the fields later, edit the extraction in the Library, not here. You can also type fields straight into ${UI("Extraction fields")} if you don't have a saved set.</p>`,
-shot(W+"07-select-extraction.jpg","Select Extraction dialog listing saved extractions on the Mine tab","Picking a saved extraction.",[[1,476,349]],[[490,336,740,362]]) +
+shot(W+"07-select-extraction.jpg","Select Extraction dialog listing saved extractions on the Mine tab","Picking a saved extraction.",[[1,476,329]],[[490,316,740,342]]) +
 shot(W+"08-extraction-task.jpg","Extraction task with the saved set selected, its five fields listed, and the Update button","The fields load from the saved set.",[[1,757,130],[2,757,191],[3,604,479]],[[481,118,746,142],[481,170,746,213],[617,467,746,491]]))}
 
 ${gstep(8,"Finish step 1",`
@@ -958,7 +958,7 @@ ${gstep(5,"Read the answer",`
 <li>Thumbs up / thumbs down: tell your administrators whether the answer was good.</li>
 <li>The copy icon copies the answer.</li>
 </ul>`,
-shot(C+"05-answer.jpg","Answer showing total budget $485,000 and the three yearly amounts, each marked p. 1, with feedback and copy buttons","The answer, with page references.",[[1,470,238],[2,540,300],[3,750,300]],[[481,195,747,282],[490,293,527,306],[721,293,737,307]]))}
+shot(C+"05-answer.jpg","Answer showing total budget $485,000 and the three yearly amounts, with the source cited below them and the feedback and copy buttons","The answer, with its source cited.",[[1,470,238],[2,540,318],[3,750,318]],[[481,195,747,300],[490,311,527,325],[721,311,737,325]]))}
 
 ${gstep(6,"Check it against the document",`
 <p>Page references are plain text, not links. To check one:</p>
@@ -1090,8 +1090,8 @@ ${gstep(7,"Pin your tools",`
 </ol>
 <p>Pinned tools appear as cards under ${UI("Pinned Tools")}; click a card's ✕ to unpin it. You can also pin automations and knowledge bases.</p>
 <p class="small-note">Project pins are separate from the ${UI("Pinned")} view in your Library, which holds your personal pins.</p>`,
-shot(P+"08-pin-search.jpg","Pin a tool search filtered to Training Guide, showing one workflow and one extraction to pin","Finding tools to pin.",[[1,526,203],[2,702,241],[3,695,274]],[[539,192,771,215],[539,232,689,250],[539,265,682,283]]) +
-shot(P+"09-pinned.jpg","Both demo tools pinned as cards under Pinned Tools","Both tools pinned.",[[1,522,306]],[[531,286,789,326]]))}
+shot(P+"08-pin-search.jpg","Pin a tool search filtered to Training Guide, showing one workflow and one extraction to pin","Finding tools to pin.",[[1,526,203],[2,702,241],[3,695,296]],[[539,192,771,215],[539,232,689,250],[539,287,682,305]]) +
+shot(P+"09-pinned.jpg","Both demo tools pinned as cards under Pinned Tools","Both tools pinned.",[[1,522,353]],[[531,333,789,374]]))}
 
 ${gstep(8,"Add a knowledge base",`
 <p class="small-note">No screenshot: this demo project has no files to build one from.</p>
@@ -1172,7 +1172,7 @@ ${gstep(2,"Item actions",`
 <li>${UI("Delete")}: removes the item.</li>
 </ul>`,
 shot(L+"02-hover-icons.jpg","Hovering over a Library item reveals the star, pin and more icons","Hover to reveal the icons.",[[1,715,236]],[[680,202,751,225]]) +
-shot(L+"03-more-menu.jpg","The more menu with Pin, Unfavorite, Copy share link, Duplicate, Share, Move to folder and Delete","The ⋯ menu.",[[1,610,264],[2,610,363],[3,757,336],[4,757,391]],[[631,255,746,273],[631,353,746,373],[631,326,746,346],[631,381,746,401]]))}
+shot(L+"03-more-menu.jpg","The more menu with Pin, Favorite, Copy share link, Duplicate, Share, Move to folder and Delete","The ⋯ menu.",[[1,610,264],[2,610,363],[3,757,336],[4,757,391]],[[631,255,746,273],[631,353,746,373],[631,326,746,346],[631,381,746,401]]))}
 
 ${gstep(3,"Favorites and pins",`
 <ol>
@@ -1288,7 +1288,7 @@ ${gstep(1,"Read quality badges",`
 <tr><td>Unvalidated</td><td>Never measured, or below 50%</td></tr>
 </table>
 <p class="small-note">These are Vandalizer's default thresholds; your administrator can change them. Scores are pulled toward 50% when there are fewer than three test cases or runs, so a small test set can't produce a falsely high score.</p>`,
-shot(V+"01-library-badge.jpg","Library list with a Quality: Fair (57%) badge on one extraction","A quality badge in the Library.",[[1,700,316]],[[620,304,685,318]]))}
+shot(V+"01-library-badge.jpg","Library list with a Quality: Fair (57%) badge on one extraction","A quality badge in the Library.",[[1,700,357]],[[620,350,685,364]]))}
 
 ${gstep(2,"Open the Validate tab",`
 <ol>
@@ -1373,7 +1373,7 @@ ${gstep(9,"Review the quality checks",`
 <p>${UI("Regenerate")} redrafts the automatic checks with AI and keeps any you wrote yourself.</p>
 <div class="callout warn"><strong>Why this matters</strong>A check that doesn't match what the workflow is supposed to do will fail every time and drag the grade down, even when the output is right.</div>`,
 shot(V+"08-workflow-plan.jpg","Validation Plan with Regenerate and the first auto-drafted Completeness checks","Auto-drafted checks at the top of the plan.",[[1,730,175],[2,492,252]],[[654,165,717,185],[505,199,715,306]]) +
-shot(V+"09-workflow-plan-end.jpg","Formatting and Accuracy checks with edit and remove icons, the Add Check button and Detailed check results","The end of the plan, with + Add Check.",[[1,690,163],[2,580,338],[3,742,399]],[[676,139,706,153],[509,329,566,347],[484,380,735,419]]))}
+shot(V+"09-workflow-plan-end.jpg","Accuracy and Content checks with edit and remove icons, the Add Check button and Detailed check results","The end of the plan, with + Add Check.",[[1,690,250],[2,580,338],[3,742,399]],[[676,243,706,257],[509,329,566,347],[484,380,735,419]]))}
 
 ${gstep(10,"Run the checks and read the grade",`
 <p class="small-note">No screenshot: this guide doesn't run a validation.</p>
@@ -1444,7 +1444,7 @@ ${gstep(1,"Open Automations",`
 <li>Click ${UI("+ New")}.</li>
 </ol>
 <p>The page explains the idea: automations <em>watch</em> a folder, an API endpoint or a schedule; <em>trigger</em> a workflow, extraction or task; and <em>deliver</em> results to a folder or by email.</p>`,
-shot(A+"01-landing.jpg","Automations page: Work that runs while you don't have to, with the + New button","The Automations page.",[[1,40,150],[2,395,59]],[[5,139,27,161],[407,48,456,70]]))}
+shot(A+"01-landing.jpg","Automations page listing the existing automations, with the + New button","The Automations page.",[[1,40,150],[2,395,59]],[[5,139,27,161],[407,48,456,70]]))}
 
 ${gstep(2,"Name it",`
 <p>A five-step ${UI("New Automation")} wizard opens.</p>
@@ -1482,7 +1482,7 @@ ${gstep(5,"Choose what runs",`
 <li>Click ${UI("Next")}.</li>
 </ol>
 <p>Only automate a workflow you've already tested and, ideally, validated (see the <a href="#/features/validate">Validate &amp; Improve guide</a>).</p>`,
-shot(A+"06-pick-workflow.jpg","Select Workflow dialog with the demo workflow in the Mine tab","Picking the workflow.",[[1,222,335]],[[232,316,568,354]]) +
+shot(A+"06-pick-workflow.jpg","Select Workflow dialog with the demo workflow in the Mine tab","Picking the workflow.",[[1,222,355]],[[232,338,568,372]]) +
 shot(A+"05-action.jpg","Step 4 of 5: Run Workflow selected and the demo workflow chosen","Step 4: what runs.",[[1,236,194],[2,236,349],[3,566,397]],[[248,173,551,216],[248,334,551,363],[507,384,551,410]]))}
 
 ${gstep(6,"Output and activation",`
@@ -1580,7 +1580,7 @@ ${gstep(2,"Know what your team can see",`
 <li><strong>Automations:</strong> the ${UI("Share with team")} box in the wizard.</li>
 </ul>
 <p><strong>Before creating something private,</strong> check which team is current. Ask your administrator if you need a separate personal workspace.</p>`,
-shot(T+"04-library-team.jpg","Library Team tab listing the two Training Guide Demo items and two colleagues' items","The Library's Team tab.",[[1,102,104],[2,113,236]],[[85,113,123,131],[125,190,760,283]]))}
+shot(T+"04-library-team.jpg","Library Team tab listing the Training Guide Demo items and two colleagues' items, with the owners' names blanked out","The Library's Team tab.",[[1,102,104],[2,113,236]],[[85,113,123,131],[125,190,760,283]]))}
 
 ${gstep(3,"See members and roles",`
 <p>The Teams page shows the current team, <em>your role</em>, and every member with their role.</p>
