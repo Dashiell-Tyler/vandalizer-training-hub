@@ -2,6 +2,8 @@
 
 A browser-based training hub for [Vandalizer](https://vandalizer.uidaho.edu/docs), the AI document platform for research administration created by [AI4RA](https://ai4ra.uidaho.edu/) at the University of Idaho.
 
+**[Launch the Training Hub](https://dashiell-tyler.github.io/vandalizer-training-hub/)** (hosted on GitHub Pages, nothing to install)
+
 ## Modules
 
 1. **Vandalizer Feature Guides**: step-by-step guides with screenshots for each feature
